@@ -3,6 +3,7 @@ package com.ecommerce.notificationservice;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.messaging.Message;
 
 import java.util.function.Consumer;
 
@@ -14,9 +15,9 @@ public class NotificationServiceApplication {
 	}
 
 	@Bean
-	public Consumer<VO> notificationEventSupplier() {
-		return obj -> {
-			new EmailSender().sendEmail(obj);
+	public Consumer<Message<String>> notificationEventSupplier() {
+		return message -> {
+			new EmailSender().sendEmail(message.getPayload());
 		};
 	}
 }
